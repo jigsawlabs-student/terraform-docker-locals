@@ -1,6 +1,3 @@
-
-
-
 resource "aws_db_instance" "postgres_db" {
   allocated_storage    = 20
   db_name =             "job_scraper"
@@ -18,7 +15,7 @@ resource "aws_db_instance" "postgres_db" {
 }
 
 resource "aws_security_group" "postgres_access" {
-  name = "psql access"
+  name = "psql access 1"
   ingress {
     from_port   = 5432
     to_port     = 5432
@@ -28,6 +25,6 @@ resource "aws_security_group" "postgres_access" {
 }
 
 output "connection_instructions" {
-  value = "psql -d ${aws_db_instance.postgres_db.db_name} -h ${aws_db_instance.postgres_db.endpoint} -U ${aws_db_instance.postgres_db.username}"
+  value = "psql -d ${aws_db_instance.postgres_db.db_name} -h ${split(":", aws_db_instance.postgres_db.endpoint)[0]} -U ${aws_db_instance.postgres_db.username}"
 }
 
